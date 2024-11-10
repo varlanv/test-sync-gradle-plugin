@@ -12,7 +12,7 @@ gradlePlugin {
             displayName = "Huskit Test Sync Plugin"
             description = "Plugin for synchronizing parallel tests across multiple Gradle modules"
             implementationClass = "com.huskit.gradle.testsync.HuskitTestSyncPlugin"
-            tags.addAll("test", "integrationTest", "junit", "sync", "synchronization", "parallel", "multimodule")
+            tags = listOf("test", "integrationTest", "junit", "sync", "synchronization", "parallel", "multimodule")
         }
     }
 }
