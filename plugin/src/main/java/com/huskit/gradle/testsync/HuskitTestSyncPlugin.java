@@ -12,7 +12,9 @@ public class HuskitTestSyncPlugin implements Plugin<Project> {
             .getSharedServices()
             .registerIfAbsent(
                 Constants.BUILD_SERVICE_NAME,
-                TestSynchronizerBuildService.class
+                TestSynchronizerBuildService.class,
+                spec -> {
+                }
             );
         var testSyncExtension = project.getObjects().newInstance(HuskitTestSyncExtension.class);
         project.getExtensions().add(

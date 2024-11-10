@@ -40,5 +40,5 @@ include(
     "mixed-tag:mixed-tag-7",
     "mixed-tag:mixed-tag-8",
     "mixed-tag:mixed-tag-9",
-    "mixed-tag:mixed-tag-10",
+    "mixed-tag:mixed-tag-10"
 )

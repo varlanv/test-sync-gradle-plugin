@@ -1,7 +1,7 @@
 import com.huskit.gradle.testsync.HuskitTestSyncExtensionView
 
 plugins {
-    id("com.huskit.gradle.testsync-plugin").version("1.0.0-SNAPSHOT-1").apply(false)
+    id("com.huskit.gradle.testsync-plugin").version("1.0.0").apply(false)
 }
 
 abstract class TestBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {
@@ -35,7 +35,8 @@ subprojects {
 
     val buildService = gradle.sharedServices.registerIfAbsent(
         "testFileBuildService",
-        TestBuildService::class.java
+        TestBuildService::class.java,
+        Action { }
     )
 
     repositories {
@@ -59,12 +60,14 @@ subprojects {
         }
     }
 
+    val junitPlatformDep = "org.junit.platform:junit-platform-launcher:1.11.3"
     val junitApiDep = "org.junit.jupiter:junit-jupiter-api:5.11.3"
     val junitEngineDep = "org.junit.jupiter:junit-jupiter-engine:5.11.3"
     if (project.name.contains("single-tag")) {
         if (project.name == "base-single-tag") {
             project.dependencies.add("api", junitApiDep)
             project.dependencies.add("api", junitEngineDep)
+            project.dependencies.add("api", junitPlatformDep)
         } else {
             dependencies.add("implementation", project(":single-tag:base-single-tag"))
         }
@@ -75,6 +78,7 @@ subprojects {
         if (project.name == "base-multi-tag") {
             project.dependencies.add("api", junitApiDep)
             project.dependencies.add("api", junitEngineDep)
+            project.dependencies.add("api", junitPlatformDep)
         } else {
             dependencies.add("implementation", project(":multi-tag:base-multi-tag"))
 
@@ -86,6 +90,7 @@ subprojects {
         if (project.name == "base-mixed-tag") {
             project.dependencies.add("api", junitApiDep)
             project.dependencies.add("api", junitEngineDep)
+            project.dependencies.add("api", junitPlatformDep)
         } else {
             dependencies.add("implementation", project(":mixed-tag:base-mixed-tag"))
         }
