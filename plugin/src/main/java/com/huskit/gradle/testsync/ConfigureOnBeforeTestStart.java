@@ -33,8 +33,8 @@ class ConfigureOnBeforeTestStart implements Action<Task> {
                         Constants.SYNC_PROPERTY,
                         prop
                     );
-                    task.getLogger().error(
-                        "Running test task with seed [{}] and sync file [{}]",
+                    task.getLogger().info(
+                        "Running test task with seed [{}] and sync property [{}]",
                         syncProperty.seed(), prop
                     );
                 },
