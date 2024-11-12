@@ -131,11 +131,11 @@ workflows:
       - gradle-unit-test:
           name: Unit test
           requires:
-            - gradle-build
+            - Compile
       - gradle-static-analysis:
           name: Static analysis of sources and tests
           requires:
-            - gradle-unit-test
+            - Unit test
       #      - gradle-functional-test-unix:
       #          name: Functional test
       #          requires:
@@ -143,4 +143,4 @@ workflows:
       - gradle-publish:
           name: Publish
           requires:
-            - gradle-publish
+            - Static analysis of sources and tests
