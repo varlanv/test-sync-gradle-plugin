@@ -32,7 +32,7 @@ commands:
     steps:
       - run:
           name: "Run gradle command << parameters.command >>"
-          command: "chmod +x ./gradlew && ./gradlew << parameters.command >> --no-configuration-cache --no-build-cache --no-configure-on-demand --stacktrace"
+          command: "chmod +x ./gradlew && ./gradlew << parameters.command >> --info --no-configuration-cache --no-build-cache --no-configure-on-demand --stacktrace"
   save-gradle-cache:
     steps:
       - save_cache:
