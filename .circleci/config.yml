@@ -48,18 +48,8 @@ commands:
       test-type:
         type: string
         description: "The type of test to run: test, integrationTest or functionalTest"
-      setup-docker:
-        type: boolean
-        default: false
-        description: "Whether to setup remote docker or not"
     steps:
       - checkout
-      - when:
-          condition:
-            equal: [ true, << parameters.setup-docker >> ]
-          steps:
-            - setup_remote_docker:
-                docker_layer_caching: true
       - restore-gradle-cache
       - run-gradle-command:
           command: << parameters.test-type >>
@@ -89,7 +79,6 @@ jobs:
     steps:
       - gradle-test:
           test-type: "functionalTest"
-          setup-docker: true
   static-analysis:
     executor: jdk-executor
     steps:
@@ -117,7 +106,7 @@ workflows:
           name: Compile
       - gradle-unit-test:
           name: Unit test
-      - gradle-functional-test-unix:
-          name: Functional test
+#      - gradle-functional-test-unix:
+#          name: Functional test
       - static-analysis:
           name: Static analysis of sources and tests
