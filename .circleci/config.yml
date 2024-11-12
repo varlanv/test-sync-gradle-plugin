@@ -79,13 +79,21 @@ jobs:
     steps:
       - gradle-test:
           test-type: "functionalTest"
-  static-analysis:
+  gradle-static-analysis:
     executor: jdk-executor
     steps:
       - checkout
       - restore-gradle-cache
       - run-gradle-command:
           command: "staticAnalyseFull"
+  gradle-publish:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run-gradle-command:
+          command: "publishToMavenLocal"
+
 
 workflows:
   Verify:
@@ -106,7 +114,33 @@ workflows:
           name: Compile
       - gradle-unit-test:
           name: Unit test
-#      - gradle-functional-test-unix:
-#          name: Functional test
-      - static-analysis:
+      #      - gradle-functional-test-unix:
+      #          name: Functional test
+      - gradle-static-analysis:
           name: Static analysis of sources and tests
+  Publish:
+    jobs:
+      - gradle-build:
+          name: Compile
+          filters:
+            tags:
+              only:
+                - /^v.*/
+            branches:
+              ignore: /.*/
+      - gradle-unit-test:
+          name: Unit test
+          requires:
+            - gradle-build
+      - gradle-static-analysis:
+          name: Static analysis of sources and tests
+          requires:
+            - gradle-unit-test
+      #      - gradle-functional-test-unix:
+      #          name: Functional test
+      #          requires:
+      #            - gradle-build
+      - gradle-publish:
+          name: Publish
+          requires:
+            - gradle-publish
