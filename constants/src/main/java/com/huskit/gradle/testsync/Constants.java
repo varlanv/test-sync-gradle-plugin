@@ -2,7 +2,7 @@ package com.huskit.gradle.testsync;
 
 class Constants {
 
-    static final String PLUGIN_VERSION = "1.0.0-SNAPSHOT-1";
+    static final String PLUGIN_VERSION = "1.0.01-SNAPSHOT";
     static final String SYNCHRONIZER_DEPENDENCY = "com.huskit.gradle.testsync:synchronizer:" + PLUGIN_VERSION;
     static final String EXTENSION_NAME = "huskitTestSync";
     static final String BUILD_SERVICE_NAME = "__internal_huskit_plugin_bs__";

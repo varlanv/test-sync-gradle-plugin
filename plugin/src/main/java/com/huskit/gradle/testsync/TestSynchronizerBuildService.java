@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
@@ -26,7 +27,7 @@ public abstract class TestSynchronizerBuildService implements BuildService<Build
     private static final Logger log = Logging.getLogger(TestSynchronizerBuildService.class);
     private static final String TEMP_FOLDER_PATH_STR = System.getProperty("java.io.tmpdir");
     transient long seed = ThreadLocalRandom.current().nextLong();
-    transient ConcurrentHashMap<String, SyncTagProperty> tagToSyncPropMap = new ConcurrentHashMap<>();
+    transient ConcurrentMap<String, SyncTagProperty> tagToSyncPropMap = new ConcurrentHashMap<>();
 
     @Getter
     @RequiredArgsConstructor
@@ -52,24 +53,19 @@ public abstract class TestSynchronizerBuildService implements BuildService<Build
         }
     }
 
+    @Getter
     static final class SyncProperty {
 
-        @Getter
         long seed;
-        String syncProperty;
+        String property;
 
-        SyncProperty(long seed, String syncProperty) {
+        SyncProperty(long seed, String property) {
             this.seed = seed;
-            this.syncProperty = Objects.requireNonNull(syncProperty);
+            this.property = Objects.requireNonNull(property);
         }
 
         SyncProperty(long seed) {
-            this.seed = seed;
-            this.syncProperty = null;
-        }
-
-        Optional<String> property() {
-            return Optional.ofNullable(syncProperty);
+            this(seed, "");
         }
     }
 

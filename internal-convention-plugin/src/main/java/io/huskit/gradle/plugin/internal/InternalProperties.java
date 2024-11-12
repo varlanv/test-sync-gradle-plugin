@@ -2,6 +2,7 @@ package io.huskit.gradle.plugin.internal;
 
 import lombok.RequiredArgsConstructor;
 import org.gradle.api.artifacts.VersionCatalog;
+import org.gradle.api.artifacts.VersionConstraint;
 import org.gradle.api.provider.Provider;
 
 @RequiredArgsConstructor
@@ -15,9 +16,15 @@ public class InternalProperties {
 
     public String getLib(String name) {
         return versionCatalog.findLibrary(name)
-                .map(maybeLib -> maybeLib.map(lib -> String.format("%s:%s:%s", lib.getGroup(), lib.getName(), lib.getVersion())))
-                .map(Provider::getOrNull)
-                .orElseThrow();
+            .map(maybeLib -> maybeLib.map(lib -> String.format("%s:%s:%s", lib.getGroup(), lib.getName(), lib.getVersion())))
+            .map(Provider::getOrNull)
+            .orElseThrow();
 
+    }
+
+    public String getVersion(String name) {
+        return versionCatalog.findVersion(name)
+            .map(VersionConstraint::getRequiredVersion)
+            .orElseThrow();
     }
 }

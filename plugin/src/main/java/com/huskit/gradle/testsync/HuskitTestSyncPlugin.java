@@ -21,23 +21,22 @@ public class HuskitTestSyncPlugin implements Plugin<Project> {
             Constants.EXTENSION_NAME,
             testSyncExtension
         );
-        project.afterEvaluate(
-            p -> p.getTasks().withType(
-                Test.class,
-                test -> {
-                    test.usesService(buildServiceProvider);
-                    test.doFirst(
-                        new ConfigureOnBeforeTestStart(
-                            testSyncExtension,
-                            buildServiceProvider
-                        )
-                    );
-                    p.getDependencies().add(
-                        test.getName() + "Implementation",
-                        Constants.SYNCHRONIZER_DEPENDENCY
-                    );
-                }
-            )
+        var dependencies = project.getDependencies();
+        project.getTasks().withType(
+            Test.class,
+            test -> {
+                test.usesService(buildServiceProvider);
+                test.doFirst(
+                    new ConfigureOnBeforeTestStart(
+                        testSyncExtension,
+                        buildServiceProvider
+                    )
+                );
+                dependencies.add(
+                    test.getName() + "RuntimeOnly",
+                    Constants.SYNCHRONIZER_DEPENDENCY
+                );
+            }
         );
     }
 }

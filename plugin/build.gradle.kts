@@ -17,6 +17,13 @@ gradlePlugin {
     }
 }
 
+huskitConvention {
+    integrationTestName = "functionalTest"
+}
+
 dependencies {
     compileOnly(projects.constants)
+    compileOnly(libs.junit.platform.engine)
+    compileOnly(libs.junit.platform.launcher)
+    compileOnly(libs.junit.jupiter.api)
 }

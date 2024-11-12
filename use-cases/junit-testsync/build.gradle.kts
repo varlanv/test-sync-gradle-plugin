@@ -1,7 +1,7 @@
 import com.huskit.gradle.testsync.HuskitTestSyncExtensionView
 
 plugins {
-    id("com.huskit.gradle.testsync-plugin").version("1.0.0").apply(false)
+    id("com.huskit.gradle.testsync-plugin").version("1.0.01-SNAPSHOT").apply(false)
 }
 
 abstract class TestBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {

@@ -1,0 +1,123 @@
+version: 2.1
+
+executors:
+  jdk-executor:
+    docker:
+      - image: cimg/openjdk:11.0.25
+
+commands:
+  prepare-gradle:
+    steps:
+      - run:
+          name: Replace distributionUrl
+          command: sed -i 's/-all.zip/-bin.zip/' gradle/wrapper/gradle-wrapper.properties
+  restore-gradle-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - gradle-cache-{{ checksum "build.gradle.kts" }}-{{ checksum "settings.gradle.kts" }}
+  save-gradle-test-results:
+    steps:
+      - run:
+          name: "Save test results unix"
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+  run-gradle-command:
+    parameters:
+      command:
+        type: string
+    steps:
+      - run:
+          name: "Run gradle command << parameters.command >>"
+          command: "./gradlew << parameters.command >> --no-configuration-cache --no-build-cache --no-configure-on-demand --stacktrace"
+  save-gradle-cache:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper/
+          key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches/
+          key: gradle-cache-{{ checksum "build.gradle.kts" }}-{{ checksum "settings.gradle.kts" }}
+  gradle-test:
+    parameters:
+      test-type:
+        type: string
+        description: "The type of test to run: test, integrationTest or functionalTest"
+      setup-docker:
+        type: boolean
+        default: false
+        description: "Whether to setup remote docker or not"
+    steps:
+      - checkout
+      - when:
+          condition:
+            equal: [ true, << parameters.setup-docker >> ]
+          steps:
+            - setup_remote_docker:
+                docker_layer_caching: true
+      - restore-gradle-cache
+      - run-gradle-command:
+          command: << parameters.test-type >>
+      - save-gradle-test-results
+      - store_test_results:
+          path: ~/test-results
+
+jobs:
+  gradle-build:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - prepare-gradle
+      - restore-gradle-cache
+      - run-gradle-command:
+          command: "assemble testClasses integrationTestClasses functionalTestClasses"
+      - save-gradle-cache
+
+  gradle-unit-test:
+    executor: jdk-executor
+    steps:
+      - gradle-test:
+          test-type: "test"
+
+  gradle-functional-test-unix:
+    executor: jdk-executor
+    steps:
+      - gradle-test:
+          test-type: "functionalTest"
+          setup-docker: true
+  static-analysis:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run-gradle-command:
+          command: "staticAnalyseFull"
+
+workflows:
+  Verify:
+    when:
+      or:
+        - equal: [ "master", << pipeline.git.branch >> ]
+        - matches:
+            pattern: feature/.*
+            value: << pipeline.git.branch >>
+        - matches:
+            pattern: fix/.*
+            value: << pipeline.git.branch >>
+        - matches:
+            pattern: bugfix/.*
+            value: << pipeline.git.branch >>
+    jobs:
+      - gradle-build:
+          name: Compile
+      - gradle-unit-test:
+          name: Unit test
+      - gradle-functional-test-unix:
+          name: Functional test
+      - static-analysis:
+          name: Static analysis of sources and tests
