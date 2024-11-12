@@ -119,6 +119,9 @@ workflows:
       - gradle-static-analysis:
           name: Static analysis of sources and tests
   Publish:
+    when:
+      or:
+        - equal: [ "master", << pipeline.git.branch >> ]
     jobs:
       - gradle-build:
           name: Compile
@@ -126,12 +129,14 @@ workflows:
             tags:
               only:
                 - /^v.*/
-            branches:
-              ignore: /.*/
       - gradle-unit-test:
           name: Unit test
           requires:
             - Compile
+          filters:
+            tags:
+              only:
+                - /^v.*/
       - gradle-static-analysis:
           name: Static analysis of sources and tests
           requires:
@@ -140,7 +145,15 @@ workflows:
       #          name: Functional test
       #          requires:
       #            - gradle-build
+          filters:
+            tags:
+              only:
+                - /^v.*/
       - gradle-publish:
           name: Publish
           requires:
             - Static analysis of sources and tests
+          filters:
+            tags:
+              only:
+                - /^v.*/
