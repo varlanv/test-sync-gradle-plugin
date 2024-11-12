@@ -119,9 +119,6 @@ workflows:
       - gradle-static-analysis:
           name: Static analysis of sources and tests
   Publish:
-    when:
-      or:
-        - equal: [ "master", << pipeline.git.branch >> ]
     jobs:
       - gradle-build:
           name: Compile
