@@ -50,6 +50,7 @@ commands:
         description: "The type of test to run: test, integrationTest or functionalTest"
     steps:
       - checkout
+      - prepare-gradle
       - restore-gradle-cache
       - run-gradle-command:
           command: << parameters.test-type >>
@@ -83,6 +84,7 @@ jobs:
     executor: jdk-executor
     steps:
       - checkout
+      - prepare-gradle
       - restore-gradle-cache
       - run-gradle-command:
           command: "staticAnalyseFull"
@@ -90,6 +92,7 @@ jobs:
     executor: jdk-executor
     steps:
       - checkout
+      - prepare-gradle
       - restore-gradle-cache
       - run-gradle-command:
           command: "publishToMavenLocal"
