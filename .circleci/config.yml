@@ -129,6 +129,8 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
       - gradle-unit-test:
           name: Unit test
           requires:
@@ -137,6 +139,8 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
       - gradle-static-analysis:
           name: Static analysis of sources and tests
           requires:
@@ -149,6 +153,8 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
       - gradle-publish:
           name: Publish
           requires:
@@ -157,3 +163,5 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
