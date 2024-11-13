@@ -1,21 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC
-        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
-        "https://checkstyle.org/dtds/configuration_1_3.dtd">
-
-<!--
-    Checkstyle configuration that checks the Google coding conventions from Google Java Style
-    that can be found at https://google.github.io/styleguide/javaguide.html
-
-    Checkstyle is very configurable. Be sure to read the documentation at
-    http://checkstyle.org (or in your downloaded distribution).
-
-    To completely disable a check, just comment it out or delete it from the file.
-    To suppress certain violations please review suppression filters.
-
-    Authors: Max Vetrenko, Ruslan Diachenko, Roman Ivanov.
- -->
-
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="Checker">
 
     <property name="charset" value="UTF-8"/>
@@ -34,7 +20,7 @@
     <!-- https://checkstyle.org/filters/suppressionfilter.html -->
     <module name="SuppressionFilter">
         <property name="file" value="${org.checkstyle.google.suppressionfilter.config}"
-                  default="checkstyle-suppressions.xml" />
+                  default="checkstyle-suppressions.xml"/>
         <property name="optional" value="true"/>
     </module>
 
@@ -73,7 +59,7 @@
             <property name="allowByTailComment" value="true"/>
             <property name="allowNonPrintableEscapes" value="true"/>
         </module>
-<!--        <module name="AvoidStarImport"/>-->
+        <!--        <module name="AvoidStarImport"/>-->
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap">
             <property name="tokens" value="PACKAGE_DEF, IMPORT, STATIC_IMPORT"/>
@@ -226,31 +212,31 @@
             <message key="name.invalidPattern"
                      value="Pattern variable name ''{0}'' must match pattern ''{1}''."/>
         </module>
-<!--        <module name="ClassTypeParameterName">-->
-<!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Class type name ''{0}'' must match pattern ''{1}''."/>-->
-<!--        </module>-->
+        <!--        <module name="ClassTypeParameterName">-->
+        <!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
+        <!--            <message key="name.invalidPattern"-->
+        <!--                     value="Class type name ''{0}'' must match pattern ''{1}''."/>-->
+        <!--        </module>-->
         <module name="RecordComponentName">
             <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
             <message key="name.invalidPattern"
                      value="Record component name ''{0}'' must match pattern ''{1}''."/>
         </module>
-<!--        <module name="RecordTypeParameterName">-->
-<!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Record type name ''{0}'' must match pattern ''{1}''."/>-->
-<!--        </module>-->
-<!--        <module name="MethodTypeParameterName">-->
-<!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Method type name ''{0}'' must match pattern ''{1}''."/>-->
-<!--        </module>-->
-<!--        <module name="InterfaceTypeParameterName">-->
-<!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Interface type name ''{0}'' must match pattern ''{1}''."/>-->
-<!--        </module>-->
+        <!--        <module name="RecordTypeParameterName">-->
+        <!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
+        <!--            <message key="name.invalidPattern"-->
+        <!--                     value="Record type name ''{0}'' must match pattern ''{1}''."/>-->
+        <!--        </module>-->
+        <!--        <module name="MethodTypeParameterName">-->
+        <!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
+        <!--            <message key="name.invalidPattern"-->
+        <!--                     value="Method type name ''{0}'' must match pattern ''{1}''."/>-->
+        <!--        </module>-->
+        <!--        <module name="InterfaceTypeParameterName">-->
+        <!--            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>-->
+        <!--            <message key="name.invalidPattern"-->
+        <!--                     value="Interface type name ''{0}'' must match pattern ''{1}''."/>-->
+        <!--        </module>-->
         <module name="NoFinalizer"/>
         <module name="GenericWhitespace">
             <message key="ws.followed"
@@ -262,14 +248,14 @@
             <message key="ws.notPreceded"
                      value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
         </module>
-<!--        <module name="Indentation">-->
-<!--            <property name="basicOffset" value="4"/>-->
-<!--            <property name="braceAdjustment" value="4"/>-->
-<!--            <property name="caseIndent" value="4"/>-->
-<!--            <property name="throwsIndent" value="4"/>-->
-<!--            <property name="lineWrappingIndentation" value="0"/>-->
-<!--            <property name="arrayInitIndent" value="4"/>-->
-<!--        </module>-->
+        <!--        <module name="Indentation">-->
+        <!--            <property name="basicOffset" value="4"/>-->
+        <!--            <property name="braceAdjustment" value="4"/>-->
+        <!--            <property name="caseIndent" value="4"/>-->
+        <!--            <property name="throwsIndent" value="4"/>-->
+        <!--            <property name="lineWrappingIndentation" value="0"/>-->
+        <!--            <property name="arrayInitIndent" value="4"/>-->
+        <!--        </module>-->
         <module name="AbbreviationAsWordInName">
             <property name="ignoreFinal" value="false"/>
             <property name="allowedAbbreviationLength" value="0"/>
@@ -282,12 +268,12 @@
         <module name="OverloadMethodsDeclarationOrder"/>
         <module name="ConstructorsDeclarationGrouping"/>
         <module name="VariableDeclarationUsageDistance"/>
-<!--        <module name="CustomImportOrder">-->
-<!--            <property name="sortImportsInGroupAlphabetically" value="true"/>-->
-<!--            <property name="separateLineBetweenGroups" value="true"/>-->
-<!--            <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE"/>-->
-<!--            <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>-->
-<!--        </module>-->
+        <!--        <module name="CustomImportOrder">-->
+        <!--            <property name="sortImportsInGroupAlphabetically" value="true"/>-->
+        <!--            <property name="separateLineBetweenGroups" value="true"/>-->
+        <!--            <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE"/>-->
+        <!--            <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>-->
+        <!--        </module>-->
         <module name="MethodParamPad">
             <property name="tokens"
                       value="CTOR_DEF, LITERAL_NEW, METHOD_CALL, METHOD_DEF, CTOR_CALL,
@@ -328,11 +314,11 @@
         <module name="NonEmptyAtclauseDescription"/>
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocTagContinuationIndentation"/>
-<!--        <module name="SummaryJavadoc">-->
-<!--            <property name="forbiddenSummaryFragments"-->
-<!--                      value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>-->
-<!--        </module>-->
-<!--        <module name="JavadocParagraph"/>-->
+        <!--        <module name="SummaryJavadoc">-->
+        <!--            <property name="forbiddenSummaryFragments"-->
+        <!--                      value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>-->
+        <!--        </module>-->
+        <!--        <module name="JavadocParagraph"/>-->
         <module name="RequireEmptyLineBeforeBlockTagGroup"/>
         <module name="AtclauseOrder">
             <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
@@ -346,20 +332,20 @@
             <property name="allowedAnnotations" value="Override, Test"/>
             <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
         </module>
-<!--        <module name="MissingJavadocMethod">-->
-<!--            <property name="scope" value="public"/>-->
-<!--            <property name="allowMissingPropertyJavadoc" value="true"/>-->
-<!--            <property name="allowedAnnotations" value="Override, Test"/>-->
-<!--            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF,-->
-<!--                                   COMPACT_CTOR_DEF"/>-->
-<!--        </module>-->
-<!--        <module name="MissingJavadocType">-->
-<!--            <property name="scope" value="protected"/>-->
-<!--            <property name="tokens"-->
-<!--                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF,-->
-<!--                      RECORD_DEF, ANNOTATION_DEF"/>-->
-<!--            <property name="excludeScope" value="nothing"/>-->
-<!--        </module>-->
+        <!--        <module name="MissingJavadocMethod">-->
+        <!--            <property name="scope" value="public"/>-->
+        <!--            <property name="allowMissingPropertyJavadoc" value="true"/>-->
+        <!--            <property name="allowedAnnotations" value="Override, Test"/>-->
+        <!--            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF,-->
+        <!--                                   COMPACT_CTOR_DEF"/>-->
+        <!--        </module>-->
+        <!--        <module name="MissingJavadocType">-->
+        <!--            <property name="scope" value="protected"/>-->
+        <!--            <property name="tokens"-->
+        <!--                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF,-->
+        <!--                      RECORD_DEF, ANNOTATION_DEF"/>-->
+        <!--            <property name="excludeScope" value="nothing"/>-->
+        <!--        </module>-->
         <module name="MethodName">
             <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
             <message key="name.invalidPattern"
@@ -375,20 +361,20 @@
         <module name="EmptyCatchBlock">
             <property name="exceptionVariableName" value="expected"/>
         </module>
-<!--        <module name="CommentsIndentation">-->
-<!--            <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>-->
-<!--        </module>-->
+        <!--        <module name="CommentsIndentation">-->
+        <!--            <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>-->
+        <!--        </module>-->
         <!-- https://checkstyle.org/filters/suppressionxpathfilter.html -->
         <module name="SuppressionXpathFilter">
             <property name="file" value="${org.checkstyle.google.suppressionxpathfilter.config}"
-                      default="checkstyle-xpath-suppressions.xml" />
+                      default="checkstyle-xpath-suppressions.xml"/>
             <property name="optional" value="true"/>
         </module>
-        <module name="SuppressWarningsHolder" />
+        <module name="SuppressWarningsHolder"/>
         <module name="SuppressionCommentFilter">
-            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)" />
-            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)" />
-            <property name="checkFormat" value="$1" />
+            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+            <property name="checkFormat" value="$1"/>
         </module>
         <module name="SuppressWithNearbyCommentFilter">
             <property name="commentFormat" value="CHECKSTYLE.SUPPRESS\: ([\w\|]+)"/>

@@ -27,7 +27,7 @@ repositories {
 dependencies {
     compileOnly(libs.jetbrains.annotations)
     compileOnly(libs.lombok)
-    implementation(libs.junit.platform.launcher)
+    compileOnly(libs.junit.platform.launcher)
     annotationProcessor(libs.lombok)
 }
 

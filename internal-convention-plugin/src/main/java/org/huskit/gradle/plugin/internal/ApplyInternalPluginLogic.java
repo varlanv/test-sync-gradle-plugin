@@ -65,7 +65,6 @@ public class ApplyInternalPluginLogic {
         // Apply common plugins
         if (isGradlePlugin) {
             pluginManager.apply(JavaGradlePluginPlugin.class);
-            pluginManager.apply(JavaPlugin.class);
         }
 
         // Configure repositories
@@ -78,10 +77,13 @@ public class ApplyInternalPluginLogic {
         pluginManager.withPlugin(
             "java",
             ignore -> {
-                pluginManager.apply(MavenPublishPlugin.class);
                 pluginManager.apply(PmdPlugin.class);
                 pluginManager.apply(CheckstylePlugin.class);
             }
+        );
+        pluginManager.withPlugin(
+            "java-library",
+            ignore -> pluginManager.apply(MavenPublishPlugin.class)
         );
 
         // Configure Java
@@ -214,29 +216,31 @@ public class ApplyInternalPluginLogic {
                 );
 
                 // Configure publishing
-                pluginManager.withPlugin(
-                    "maven-publish",
-                    plugin -> extensions.configure(
-                        PublishingExtension.class,
-                        publishingExtension -> publishingExtension.getPublications().create(
-                            "mavenJava",
-                            MavenPublication.class,
-                            mavenPublication -> {
-                                SoftwareComponent javaComponent = components.getByName("java");
-                                mavenPublication.from(javaComponent);
-                                mavenPublication.versionMapping(
-                                    versionMappingStrategy -> {
-                                        versionMappingStrategy.usage(
-                                            "java-api",
-                                            variantVersionMappingStrategy ->
-                                                variantVersionMappingStrategy.fromResolutionOf(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME));
-                                        versionMappingStrategy.usage("java-runtime", VariantVersionMappingStrategy::fromResolutionResult);
-                                    }
-                                );
-                            }
+                if (!isGradlePlugin) {
+                    pluginManager.withPlugin(
+                        "maven-publish",
+                        plugin -> extensions.configure(
+                            PublishingExtension.class,
+                            publishingExtension -> publishingExtension.getPublications().create(
+                                "mavenJava",
+                                MavenPublication.class,
+                                mavenPublication -> {
+                                    SoftwareComponent javaComponent = components.getByName("java");
+                                    mavenPublication.from(javaComponent);
+                                    mavenPublication.versionMapping(
+                                        versionMappingStrategy -> {
+                                            versionMappingStrategy.usage(
+                                                "java-api",
+                                                variantVersionMappingStrategy ->
+                                                    variantVersionMappingStrategy.fromResolutionOf(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME));
+                                            versionMappingStrategy.usage("java-runtime", VariantVersionMappingStrategy::fromResolutionResult);
+                                        }
+                                    );
+                                }
+                            )
                         )
-                    )
-                );
+                    );
+                }
 
                 var staticAnalyseFolder = Paths.get(
                     rootDir.getAbsolutePath(),

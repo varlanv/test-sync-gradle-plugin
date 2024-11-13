@@ -7,6 +7,26 @@ pluginManagement {
 
 rootProject.name = "junit-testsync"
 
+fun pathToRoot(dir: File, parts: MutableList<String> = mutableListOf()): String {
+    val targetFolderNameMarket = "internal-convention-plugin"
+    return when {
+        dir.resolve(targetFolderNameMarket).exists() -> parts.joinToString("") { "../" }
+        dir.parentFile != null -> pathToRoot(dir.parentFile, parts.apply { add(dir.name) })
+        else -> throw IllegalStateException("Cannot find a directory containing $targetFolderNameMarket")
+    }
+}
+
+include(
+    "project1",
+    "project2",
+    "project3"
+)
+
+// only include parent project for manual testing
+if (!providers.provider({ System.getenv("FUNCTIONAL_SPEC_RUN") }).isPresent) {
+    includeBuild(pathToRoot(rootProject.projectDir))
+}
+
 include(
     "single-tag:base-single-tag",
     "single-tag:single-tag-1",

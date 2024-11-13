@@ -1,12 +1,12 @@
 package org.huskit.gradle.plugin;
 
-import org.huskit.gradle.plugin.internal.ApplyInternalPluginLogic;
-import org.huskit.gradle.plugin.internal.InternalEnvironment;
-import org.huskit.gradle.plugin.internal.InternalProperties;
 import lombok.RequiredArgsConstructor;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.VersionCatalogsExtension;
+import org.huskit.gradle.plugin.internal.ApplyInternalPluginLogic;
+import org.huskit.gradle.plugin.internal.InternalEnvironment;
+import org.huskit.gradle.plugin.internal.InternalProperties;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -23,7 +23,8 @@ public class InternalConventionPlugin implements Plugin<Project> {
             () -> new InternalEnvironment(
                 providers.environmentVariable("CI").isPresent(),
                 false
-            ));
+            )
+        );
         var properties = (InternalProperties) Objects.requireNonNullElseGet(
             extensions.findByName(InternalProperties.name()),
             () -> new InternalProperties(((VersionCatalogsExtension) extensions.getByName("versionCatalogs")).named("libs")));

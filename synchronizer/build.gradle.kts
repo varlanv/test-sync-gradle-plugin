@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-library`
     alias(libs.plugins.huskitInternalConvention)
 }
 
