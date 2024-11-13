@@ -1,4 +1,4 @@
-package com.huskit.gradle;
+package org.huskit.gradle;
 
 import org.junit.jupiter.api.*;
 

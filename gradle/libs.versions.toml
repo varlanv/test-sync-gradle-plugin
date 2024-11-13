@@ -18,4 +18,5 @@ junit-platform-engine = { group = "org.junit.platform", name = "junit-platform-e
 jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrains-annotations" }
 
 [plugins]
-huskitInternalConvention = { id = "io.huskit.gradle.internal-gradle-convention-plugin" }
+huskitInternalConvention = { id = "org.huskit.gradle.internal-gradle-convention-plugin" }
+gradlePluginPublish = { id = "com.gradle.plugin-publish", version = "1.3.0" }

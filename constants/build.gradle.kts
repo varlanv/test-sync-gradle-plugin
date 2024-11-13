@@ -1,4 +1,4 @@
 plugins {
-    id("java")
+    java
     alias(libs.plugins.huskitInternalConvention)
 }

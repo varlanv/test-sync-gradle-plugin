@@ -1,5 +1,5 @@
 plugins {
-    id("com.gradle.plugin-publish").version("1.3.0")
+    alias(libs.plugins.gradlePluginPublish)
     alias(libs.plugins.huskitInternalConvention)
 }
 
@@ -8,10 +8,10 @@ gradlePlugin {
     vcsUrl = "https://github.com/varlanv/gradle-test-sync-plugin.git"
     plugins {
         create("huskitTestSyncPlugin") {
-            id = "com.huskit.gradle.testsync-plugin"
+            id = "org.huskit.testsync-gradle-plugin"
             displayName = "Huskit Test Sync Plugin"
             description = "Plugin for synchronizing parallel tests across multiple Gradle modules"
-            implementationClass = "com.huskit.gradle.testsync.HuskitTestSyncPlugin"
+            implementationClass = "org.huskit.gradle.testsync.HuskitTestSyncPlugin"
             tags = listOf("test", "integrationTest", "junit", "sync", "synchronization", "parallel", "multimodule")
         }
     }

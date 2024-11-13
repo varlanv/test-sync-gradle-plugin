@@ -35,7 +35,7 @@ gradlePlugin {
     plugins {
         create("huskitInternalGradleConventionPlugin") {
             id = libs.plugins.huskitInternalConvention.get().pluginId
-            implementationClass = "io.huskit.gradle.plugin.InternalConventionPlugin"
+            implementationClass = "org.huskit.gradle.plugin.InternalConventionPlugin"
         }
     }
 }

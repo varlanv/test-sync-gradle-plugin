@@ -1,7 +1,7 @@
-import com.huskit.gradle.testsync.HuskitTestSyncExtensionView
+import org.huskit.gradle.testsync.HuskitTestSyncExtensionView
 
 plugins {
-    id("com.huskit.gradle.testsync-plugin").version("1.0.01-SNAPSHOT").apply(false)
+    id("org.huskit.gradle.testsync-plugin").version("1.0.01-SNAPSHOT").apply(false)
 }
 
 abstract class TestBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {
@@ -31,7 +31,7 @@ abstract class TestBuildService : BuildService<BuildServiceParameters.None>, Aut
 
 subprojects {
     project.apply(mapOf("plugin" to "java-library"))
-    project.apply(mapOf("plugin" to "com.huskit.gradle.testsync-plugin"))
+    project.apply(mapOf("plugin" to "org.huskit.gradle.testsync-plugin"))
 
     val buildService = gradle.sharedServices.registerIfAbsent(
         "testFileBuildService",
