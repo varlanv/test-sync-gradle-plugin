@@ -27,12 +27,13 @@ class ConfigureOnBeforeTestStart implements Action<Task> {
             var test = (Test) task;
             var buildService = syncBuildService.get();
             var syncProperty = buildService.buildSyncProperty(testSyncExtension);
-            if (syncProperty.property().isEmpty()) {
+//            if (syncProperty.property().isEmpty()) {
 //                task.getLogger().error(
 //                    "No sync file created for tags {} and seed [{}]. This is likely caused by a bug in the plugin [{}].",
 //                    tags, syncProperty.seed(), Constants.PLUGIN_NAME
 //                );
-            } else {
+//            } else {
+            if (!syncProperty.property().isEmpty()) {
                 test.systemProperty(
                     Constants.SYNC_PROPERTY,
                     syncProperty.property()

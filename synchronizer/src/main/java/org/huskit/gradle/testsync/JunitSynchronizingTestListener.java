@@ -178,6 +178,7 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
         }
     }
 
+    @SuppressWarnings("PMD.UnusedFormalParameter")
     private static void printErr(String message) {
 //        System.err.println(JunitSynchronizingTestListener.class.getName() + " - " + message);
     }
