@@ -31,7 +31,7 @@ This plugin aims to solve exactly this problem.
 In `build.gradle`:
 ```groovy
 plugins {
-    id("com.varlanv.testsync-gradle-plugin").version("0.0.1-SNAPSHOT")
+    id("com.varlanv.testsync-gradle-plugin").version("0.0.1")
 }
 
 testSync {
@@ -61,7 +61,7 @@ In this example, all tests tagged **"postgres"** will be synchronized.
 In `build.gradle`:
 ```groovy
 plugins {
-    id("com.varlanv.testsync-gradle-plugin").version("0.0.1-SNAPSHOT")    
+    id("com.varlanv.testsync-gradle-plugin").version("0.0.1")    
 }
 
 testSync {
