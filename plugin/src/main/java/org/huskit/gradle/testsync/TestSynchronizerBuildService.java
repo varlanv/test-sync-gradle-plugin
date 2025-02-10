@@ -8,6 +8,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.services.BuildService;
 import org.gradle.api.services.BuildServiceParameters;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -25,6 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class TestSynchronizerBuildService implements BuildService<BuildServiceParameters.None>, AutoCloseable, Serializable {
 
     private static final Logger log = Logging.getLogger(TestSynchronizerBuildService.class);
+    @Nullable
     private static final String TEMP_FOLDER_PATH_STR = System.getProperty("java.io.tmpdir");
     transient long seed = ThreadLocalRandom.current().nextLong();
     transient ConcurrentMap<String, SyncTagProperty> tagToSyncPropMap = new ConcurrentHashMap<>();

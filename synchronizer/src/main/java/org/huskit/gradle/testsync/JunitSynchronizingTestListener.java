@@ -179,7 +179,7 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
     }
 
     private static void printErr(String message) {
-        System.err.println(JunitSynchronizingTestListener.class.getName() + " - " + message);
+//        System.err.println(JunitSynchronizingTestListener.class.getName() + " - " + message);
     }
 
     @RequiredArgsConstructor

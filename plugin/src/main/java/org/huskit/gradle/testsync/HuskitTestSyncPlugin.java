@@ -26,7 +26,8 @@ public class HuskitTestSyncPlugin implements Plugin<Project> {
         );
         var dependencies = project.getDependencies();
         project.getTasks().withType(
-            Test.class,
+            Test.class
+        ).configureEach(
             test -> {
                 test.usesService(buildServiceProvider);
                 test.doFirst(
