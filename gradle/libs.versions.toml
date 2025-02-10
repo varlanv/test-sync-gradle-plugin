@@ -19,4 +19,4 @@ jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version
 
 [plugins]
 huskitInternalConvention = { id = "org.huskit.gradle.internal-gradle-convention-plugin" }
-gradlePluginPublish = { id = "com.gradle.plugin-publish", version = "1.3.0" }
+gradlePluginPublish = { id = "com.gradle.plugin-publish", version = "1.3.1" }
