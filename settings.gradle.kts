@@ -15,7 +15,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention")
 }
 
-rootProject.name = "gradle-test-sync"
+rootProject.name = "gradle-test-sync-plugin"
 
 val isCi = providers.environmentVariable("CI").getOrNull()?.let { it != "false" } ?: false
 

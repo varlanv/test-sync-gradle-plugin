@@ -26,14 +26,86 @@ This plugin aims to solve exactly this problem.
 
 ## Usage
 
-TODO add usage examples after published plugin is approved
+### Synchronizing based on single tag
 
-## Implementation details
+In `build.gradle`:
+```groovy
+plugins {
+    id("com.varlanv.testsync-gradle-plugin").version("0.0.1-SNAPSHOT")
+}
 
-Synchronization is achieved by adding `org.junit.platform.launcher.TestExecutionListener` to classpath.
+testSync {
+    tag("postgres")
+}
+```
 
-Multiple JVMs are synchronized by locking on temporary files, that are created in system's temporary directory
-and are deleted after Gradle build is finished.
+In junit test:
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
+
+class PostgresTest {
+
+    @Test
+    @Tag("postgres")
+    void test() {
+        // ...
+    }
+}
+
+```
+In this example, all tests tagged **"postgres"** will be synchronized.
+
+### Synchronizing based on multiple tags
+
+In `build.gradle`:
+```groovy
+plugins {
+    id("com.varlanv.testsync-gradle-plugin").version("0.0.1-SNAPSHOT")    
+}
+
+testSync {
+    tags("postgres", "mongo")
+}
+```
+
+In junit tests:
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+
+class PostgresTest {
+
+    @Test
+    @Tag("postgres")
+    void test() {
+        // ...
+    }
+}
+
+class MongoTest {
+
+    @Test
+    @Tag("mongo")
+    void test() {
+        // ...
+    }
+}
+
+class MongoWithPostgresTest {
+
+    @Test
+    @Tags({@Tag("postgres"), @Tag("mongo")})
+    void test() {
+        // ...
+    }
+}
+```
+In this example:
+- All tests tagged **"postgres"** or **"mongo"** will have independent locks, allowing them to run independently and in parallel.
+- Tests that are tagged with both **"postgres"** AND **"mongo"** will (wait and) acquire both locks. When the locks are acquired, no other
+**"postgres"** or **"mongo"** will be allowed to start until locks are released.
 
 ## Known limitations
 

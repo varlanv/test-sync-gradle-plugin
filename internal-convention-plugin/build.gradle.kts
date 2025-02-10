@@ -33,9 +33,9 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("huskitInternalGradleConventionPlugin") {
-            id = libs.plugins.huskitInternalConvention.get().pluginId
-            implementationClass = "org.huskit.gradle.plugin.InternalConventionPlugin"
+        create("internalGradleConventionPlugin") {
+            id = libs.plugins.internalConvention.get().pluginId
+            implementationClass = "com.varlanv.gradle.plugin.InternalConventionPlugin"
         }
     }
 }

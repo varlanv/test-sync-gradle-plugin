@@ -1,1 +1,1 @@
-org.huskit.gradle.testsync.JunitSynchronizingTestListener
+com.varlanv.gradle.testsync.JunitSynchronizingTestListener

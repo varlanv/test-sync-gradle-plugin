@@ -1,4 +1,4 @@
 plugins {
     java
-    alias(libs.plugins.huskitInternalConvention)
+    alias(libs.plugins.internalConvention)
 }

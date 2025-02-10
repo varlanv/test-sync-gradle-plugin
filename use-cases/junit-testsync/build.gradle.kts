@@ -1,14 +1,14 @@
-import org.huskit.gradle.testsync.HuskitTestSyncExtensionView
+import com.varlanv.gradle.testsync.TestSyncExtensionView
 
 plugins {
-    id("org.huskit.testsync-gradle-plugin").apply(false)
+    id("com.varlanv.testsync-gradle-plugin").apply(false)
 }
 
 abstract class TestBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {
 
-    private val testSingleSyncFile: File = File.createTempFile("huskit", "gradle_test_single_sync")
-    private val testMultiSyncFile: File = File.createTempFile("huskit", "gradle_test_multi_sync")
-    private val testMixedSyncFile: File = File.createTempFile("huskit", "gradle-test_mixed_sync")
+    private val testSingleSyncFile: File = File.createTempFile("testsync", "gradle_test_single_sync")
+    private val testMultiSyncFile: File = File.createTempFile("testsync", "gradle_test_multi_sync")
+    private val testMixedSyncFile: File = File.createTempFile("testsync", "gradle-test_mixed_sync")
 
     fun testSingleSyncFile(): File {
         return testSingleSyncFile
@@ -31,7 +31,7 @@ abstract class TestBuildService : BuildService<BuildServiceParameters.None>, Aut
 
 subprojects {
     project.apply(mapOf("plugin" to "java-library"))
-    project.apply(mapOf("plugin" to "org.huskit.testsync-gradle-plugin"))
+    project.apply(mapOf("plugin" to "com.varlanv.testsync-gradle-plugin"))
 
     val buildService = gradle.sharedServices.registerIfAbsent(
         "testFileBuildService",
@@ -71,7 +71,7 @@ subprojects {
         } else {
             dependencies.add("implementation", project(":single-tag:base-single-tag"))
         }
-        extensions.configure<HuskitTestSyncExtensionView> {
+        extensions.configure<TestSyncExtensionView> {
             tags("mytag")
         }
     } else if (project.name.contains("multi-tag")) {
@@ -83,7 +83,7 @@ subprojects {
             dependencies.add("implementation", project(":multi-tag:base-multi-tag"))
 
         }
-        extensions.configure<HuskitTestSyncExtensionView> {
+        extensions.configure<TestSyncExtensionView> {
             tags("mytag1", "mytag2")
         }
     } else if (project.name.contains("mixed-tag")) {
@@ -94,7 +94,7 @@ subprojects {
         } else {
             dependencies.add("implementation", project(":mixed-tag:base-mixed-tag"))
         }
-        extensions.configure<HuskitTestSyncExtensionView> {
+        extensions.configure<TestSyncExtensionView> {
             tags("my_mixed_tag_1", "my_mixed_tag_2", "my_mixed_tag_3")
         }
     }
