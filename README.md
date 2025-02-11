@@ -19,7 +19,7 @@ root
 Both modules have API tests that call some external service.
 You want to build / tests these modules in parallel (with gradle property `org.gradle.parallel=true`),
 but external API has a rate limit that causes tests to fail when run in parallel.
-You can't simply synchronize tests by using some static state, because tests are run in different JVMs.
+You can't simply synchronize tests by using some static state or JUnit built-in synchronization tools (@ResourceLock, @Isolated, etc), because tests are run in different JVMs.
 One possible solution is to move all tests to new single module, but this is not always desirable or possible.
 
 This plugin aims to solve exactly this problem.
