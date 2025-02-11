@@ -27,3 +27,12 @@ dependencies {
     compileOnly(libs.junit.platform.launcher)
     compileOnly(libs.junit.jupiter.api)
 }
+
+tasks.named<Jar>("jar") {
+    dependsOn(":synchronizer:jar")
+    from(project.rootDir.toPath()
+        .resolve("synchronizer")
+        .resolve("build")
+        .resolve("libs")
+        .resolve("synchronizer-${providers.gradleProperty("version").get()}.jar"))
+}

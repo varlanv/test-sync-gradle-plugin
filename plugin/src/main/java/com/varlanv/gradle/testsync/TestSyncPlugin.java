@@ -16,9 +16,10 @@ public class TestSyncPlugin implements Plugin<Project> {
         val objects = project.getObjects();
         val gradle = project.getGradle();
         val sharedServices = gradle.getSharedServices();
-        val dependencies = project.getDependencies();
         val tasks = project.getTasks();
         val testSyncExtension = objects.newInstance(TestSyncExtension.class);
+        val layout = project.getLayout();
+        val buildDirectory = layout.getBuildDirectory();
         testSyncExtension.getVerboseSynchronizer().convention(false);
         testSyncExtension.getVerboseConfiguration().convention(false);
         extensions.add(
@@ -32,18 +33,17 @@ public class TestSyncPlugin implements Plugin<Project> {
             spec -> {
             }
         );
+
         tasks.withType(Test.class).configureEach(
             test -> {
+                test.setClasspath(test.getClasspath().plus(buildDirectory.files("tmp/testsyncplugin/" + Constants.SYNCHRONIZER_JAR)));
                 test.usesService(buildServiceProvider);
                 test.doFirst(
                     new ConfigureOnBeforeTestStart(
                         testSyncExtension,
-                        buildServiceProvider
+                        buildServiceProvider,
+                        buildDirectory.map(dir -> dir.getAsFile().toPath().resolve("tmp").resolve("testsyncplugin").toAbsolutePath())
                     )
-                );
-                dependencies.add(
-                    test.getName() + "RuntimeOnly",
-                    Constants.SYNCHRONIZER_DEPENDENCY
                 );
             }
         );

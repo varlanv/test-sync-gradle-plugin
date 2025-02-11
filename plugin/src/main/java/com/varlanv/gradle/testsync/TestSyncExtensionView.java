@@ -35,12 +35,16 @@ public interface TestSyncExtensionView {
     /**
      * Configure whether verbose logging during plugin configuration should be enabled.
      * Default is false.
+     *
+     * @param verbose true/false
      */
     void verboseConfiguration(boolean verbose);
 
     /**
      * Configure whether verbose logging of underlying synchronizer during test execution should be enabled.
      * Default is false.
+     *
+     * @param verbose true/false
      */
     void verboseSynchronizer(boolean verbose);
 }

@@ -7,7 +7,8 @@ package com.varlanv.gradle.testsync;
 class Constants {
 
     static final String PLUGIN_VERSION = "0.0.1";
-    static final String SYNCHRONIZER_DEPENDENCY = "com.varlanv.testsync-gradle-plugin:synchronizer:" + PLUGIN_VERSION;
+    static final String SYNCHRONIZER_JAR = "synchronizer-" + PLUGIN_VERSION + ".jar";
+    static final String SYNCHRONIZER_JAR_RESOURCE = "/" + SYNCHRONIZER_JAR;
     static final String EXTENSION_NAME = "testSync";
     static final String BUILD_SERVICE_NAME = "__internal_test_sync_plugin_bs__";
     static final String SYNC_FILE_NAME_BASE = "syncfile_";
