@@ -1,8 +1,7 @@
 package com.varlanv.gradle.testsync;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import lombok.*;
+import org.jetbrains.annotations.NotNullByDefault;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestTag;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -17,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 
+@NotNullByDefault
 public class JunitSynchronizingTestListener implements TestExecutionListener {
 
     Delegate delegate;
@@ -36,7 +36,7 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
     }
 
     private Delegate buildDelegate() {
-        var tagsList = new SyncTagsFromSystemProperty(
+        val tagsList = new SyncTagsFromSystemProperty(
             Constants.SYNC_PROPERTY,
             Constants.SYNC_PROPERTY_SEPARATOR,
             Constants.TAG_SEPARATOR
@@ -49,7 +49,7 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
                 }
             );
         } else {
-            var syncMap = new ConcurrentHashMap<String, LockHolder[]>();
+            val syncMap = new ConcurrentHashMap<String, LockHolder[]>();
             return new Delegate(
                 onTestStart(tagsList, syncMap),
                 onTestFinish(syncMap)
@@ -60,11 +60,11 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
     private Consumer<TestIdentifier> onTestStart(SyncTag[] tagsList, ConcurrentMap<String, LockHolder[]> syncMap) {
         return testIdentifier -> {
             if (testIdentifier.isTest()) {
-                var testIdentifierTags = testIdentifier.getTags();
+                val testIdentifierTags = testIdentifier.getTags();
                 if (!testIdentifierTags.isEmpty()) {
                     LockHolder[] locks = null;
                     for (var i = 0; i < tagsList.length; i++) {
-                        var syncTag = tagsList[i];
+                        val syncTag = tagsList[i];
                         if (testIdentifierTags.contains(syncTag.testTag)) {
                             if (locks == null) {
                                 locks = new LockHolder[tagsList.length];
@@ -87,11 +87,11 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
     private Consumer<TestIdentifier> onTestFinish(ConcurrentMap<String, LockHolder[]> syncMap) {
         return testIdentifier -> {
             if (testIdentifier.isTest()) {
-                var uniqueId = testIdentifier.getUniqueId();
-                var lockHolders = syncMap.get(uniqueId);
+                val uniqueId = testIdentifier.getUniqueId();
+                val lockHolders = syncMap.get(uniqueId);
                 if (lockHolders != null) {
                     try {
-                        for (var lockHolder : lockHolders) {
+                        for (val lockHolder : lockHolders) {
                             if (lockHolder != null) {
                                 try {
                                     lockHolder.lock.release();
@@ -117,25 +117,25 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
         String syncTagSeparator;
 
         SyncTag[] array() {
-            var syncProperty = System.getProperty(syncSysProperty);
-            if (syncProperty == null || syncProperty.isBlank()) {
+            val syncProperty = System.getProperty(syncSysProperty);
+            if (syncProperty == null || syncProperty.isEmpty()) {
                 return EMPTY_TAGS;
             }
             try {
-                var syncValues = syncProperty.split(syncSysPropertySeparator);
+                val syncValues = syncProperty.split(syncSysPropertySeparator);
                 if (syncValues.length == 1) {
                     return parse(syncValues[0])
                         .map(syncTag -> new SyncTag[]{syncTag})
                         .orElse(EMPTY_TAGS);
                 } else {
-                    var tagsList = new SyncTag[syncValues.length];
+                    val tagsList = new SyncTag[syncValues.length];
                     for (var i = 0; i < syncValues.length; i++) {
-                        var syncValue = syncValues[i];
-                        var maybeSyncTag = parse(syncValue);
-                        if (maybeSyncTag.isEmpty()) {
+                        val syncValue = syncValues[i];
+                        val maybeSyncTag = parse(syncValue);
+                        if (!maybeSyncTag.isPresent()) {
                             return EMPTY_TAGS;
                         }
-                        var syncTag = maybeSyncTag.get();
+                        val syncTag = maybeSyncTag.get();
                         tagsList[i] = syncTag;
                     }
                     return tagsList;
@@ -147,13 +147,13 @@ public class JunitSynchronizingTestListener implements TestExecutionListener {
         }
 
         private Optional<SyncTag> parse(String syncProperty) {
-            var split = syncProperty.split(syncTagSeparator);
+            val split = syncProperty.split(syncTagSeparator);
             if (split.length != 2) {
                 printErr("Test synchronization will be disabled, failed to parse sync tag [" + syncProperty + "]");
                 return Optional.empty();
             } else {
-                var tag = split[0];
-                var syncFilePathStr = split[1];
+                val tag = split[0];
+                val syncFilePathStr = split[1];
                 try {
                     return Optional.of(
                         new SyncTag(

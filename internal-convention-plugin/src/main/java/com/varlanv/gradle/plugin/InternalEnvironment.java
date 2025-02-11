@@ -1,9 +1,9 @@
-package com.varlanv.gradle.plugin.internal;
+package com.varlanv.gradle.plugin;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class InternalEnvironment {
+class InternalEnvironment {
 
     boolean isCi;
     boolean isTest;

@@ -1,6 +1,6 @@
 [versions]
 spock = "2.3-groovy-4.0"
-groovy = "3.0.23"
+groovy = "4.0.25"
 junitJupiter = "5.11.4"
 junitPlatform = "1.11.4"
 lombok = "1.18.36"
@@ -9,6 +9,7 @@ jetbrains-annotations = "26.0.2"
 checkstyleTool = "10.18.1"
 pmdTool = "7.5.0"
 
+
 [libraries]
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertJ" }
@@ -16,6 +17,7 @@ junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter", versi
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junitPlatform" }
 junit-platform-engine = { group = "org.junit.platform", name = "junit-platform-engine", version.ref = "junitPlatform" }
 jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrains-annotations" }
+groovy-all = { group = "org.apache.groovy", name = "groovy-all", version.ref = "groovy" }
 
 [plugins]
 internalConvention = { id = "com.varlanv.gradle.internal-gradle-convention-plugin" }

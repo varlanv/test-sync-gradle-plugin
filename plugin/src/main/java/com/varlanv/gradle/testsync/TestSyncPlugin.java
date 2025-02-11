@@ -1,5 +1,6 @@
 package com.varlanv.gradle.testsync;
 
+import lombok.val;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.testing.Test;
@@ -11,23 +12,25 @@ public class TestSyncPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        var extensions = project.getExtensions();
-        var objects = project.getObjects();
-        var gradle = project.getGradle();
-        var sharedServices = gradle.getSharedServices();
-        var dependencies = project.getDependencies();
-        var tasks = project.getTasks();
-        var buildServiceProvider = sharedServices.registerIfAbsent(
-            Constants.BUILD_SERVICE_NAME,
-            TestSynchronizerBuildService.class,
-            spec -> {
-            }
-        );
-        var testSyncExtension = objects.newInstance(TestSyncExtension.class);
+        val extensions = project.getExtensions();
+        val objects = project.getObjects();
+        val gradle = project.getGradle();
+        val sharedServices = gradle.getSharedServices();
+        val dependencies = project.getDependencies();
+        val tasks = project.getTasks();
+        val testSyncExtension = objects.newInstance(TestSyncExtension.class);
+        testSyncExtension.getVerboseSynchronizer().convention(false);
+        testSyncExtension.getVerboseConfiguration().convention(false);
         extensions.add(
             TestSyncExtensionView.class,
             Constants.EXTENSION_NAME,
             testSyncExtension
+        );
+        val buildServiceProvider = sharedServices.registerIfAbsent(
+            Constants.BUILD_SERVICE_NAME,
+            TestSynchronizerBuildService.class,
+            spec -> {
+            }
         );
         tasks.withType(Test.class).configureEach(
             test -> {

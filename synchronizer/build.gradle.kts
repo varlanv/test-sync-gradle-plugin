@@ -7,7 +7,7 @@ plugins {
 dependencies {
     compileOnly(libs.junit.platform.launcher)
     compileOnly(projects.constants)
-    testCompileOnly(projects.constants)
+    testImplementation(projects.constants)
     testImplementation(libs.junit.platform.launcher)
 }
 
