@@ -8,10 +8,9 @@ import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.testing.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -32,24 +31,17 @@ class ConfigureOnBeforeTestStart implements Action<Task> {
             );
         }
         val test = (Test) task;
-        setupSyncJar(test);
+        setupSyncJar();
         setupSyncProperties(test);
     }
 
     @SneakyThrows
-    private void setupSyncJar(Test test) {
+    private void setupSyncJar() {
         val pluginDir = Files.createDirectories(pluginDirPathProvider.get());
         val targetJarPath = pluginDir.resolve(Constants.SYNCHRONIZER_JAR);
         if (Files.notExists(targetJarPath)) {
-            Files.createFile(targetJarPath);
             try (val in = Objects.requireNonNull(ConfigureOnBeforeTestStart.class.getResourceAsStream(Constants.SYNCHRONIZER_JAR_RESOURCE))) {
-                val buffer = new ByteArrayOutputStream();
-                int nRead;
-                val data = new byte[16384];
-                while ((nRead = in.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
-                }
-                Files.write(targetJarPath, buffer.toByteArray(), StandardOpenOption.TRUNCATE_EXISTING);
+                Files.copy(in, targetJarPath, StandardCopyOption.REPLACE_EXISTING);
             }
         }
     }
