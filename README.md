@@ -107,6 +107,13 @@ In this example:
 - Tests that are tagged with both **"postgres"** AND **"mongo"** will (wait and) acquire both locks. When the locks are acquired, no other
 **"postgres"** or **"mongo"** will be allowed to start until locks are released.
 
+## Optimization
+The plugin is built to support all of the major Gradle optimization features, such as:
+* [Parallel builds (as this is whole point of plugin)](https://docs.gradle.org/current/userguide/performance.html#parallel_execution)
+* [Build cache](https://docs.gradle.org/current/userguide/build_cache.html)
+* [Configuration cache](https://docs.gradle.org/current/userguide/configuration_cache.html)
+* [Isolated projects](https://docs.gradle.org/current/userguide/isolated_projects.html)
+
 ## Known limitations
 
 - Currently, only JUnit 5 is supported
