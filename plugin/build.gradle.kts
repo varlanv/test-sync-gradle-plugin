@@ -4,8 +4,8 @@ plugins {
 }
 
 gradlePlugin {
-    website = "https://github.com/varlanv/gradle-test-sync-plugin"
-    vcsUrl = "https://github.com/varlanv/gradle-test-sync-plugin.git"
+    website = "https://github.com/varlanv/test-sync-gradle-plugin"
+    vcsUrl = "https://github.com/varlanv/test-sync-gradle-plugin"
     plugins {
         create("testSyncPlugin") {
             id = "com.varlanv.testsync-gradle-plugin"
