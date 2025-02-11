@@ -3,8 +3,8 @@ import kotlin.io.path.writeText
 
 abstract class IncrementVersion : DefaultTask() {
 
-    @Input
-    abstract fun getRootProjectFile(): RegularFileProperty
+    @InputDirectory
+    abstract fun getRootProjectFile(): DirectoryProperty
 
     @Input
     abstract fun getVersionSemantic(): Property<String>
@@ -19,16 +19,17 @@ abstract class IncrementVersion : DefaultTask() {
         val currentVersion = getCurrentVersion().get()
         val currentVersionParts = currentVersion.split('.')
         val newVersion = when (versionSemantic) {
-            "patch" -> "${currentVersionParts[0]}.${currentVersionParts[1]}.${Integer.valueOf(currentVersionParts[2]) + 1}"
-            "minor" -> "${currentVersionParts[0]}.${Integer.valueOf(currentVersionParts[1]) + 1}.0"
-            "major" -> "${Integer.valueOf(currentVersionParts[0]) + 1}.0.0"
+            "Patch" -> "${currentVersionParts[0]}.${currentVersionParts[1]}.${Integer.valueOf(currentVersionParts[2]) + 1}"
+            "Minor" -> "${currentVersionParts[0]}.${Integer.valueOf(currentVersionParts[1]) + 1}.0"
+            "Major" -> "${Integer.valueOf(currentVersionParts[0]) + 1}.0.0"
             else -> throw IllegalStateException("Unknown version semantic -> $versionSemantic")
         }
 
-        val constantsFile = rootProjectPath.resolve("constants").resolve("src").resolve("main").resolve("java").resolve("com").resolve("varlanv").resolve("gradle").resolve("testsync").resolve("Constants")
-        val propertiesFile = rootProjectPath.resolve("gradle.properties")
-        val readmeFile = rootProjectPath.resolve("README.md")
-        listOf(constantsFile, propertiesFile, readmeFile).forEach {
+        listOf(
+            rootProjectPath.resolve("constants").resolve("src").resolve("main").resolve("java").resolve("com").resolve("varlanv").resolve("gradle").resolve("testsync").resolve("Constants.java"),
+            rootProjectPath.resolve("gradle.properties"),
+            rootProjectPath.resolve("README.md")
+        ).forEach {
             val text = it.readText(Charsets.UTF_8)
             val newText = text.replace(currentVersion, newVersion)
             if (text != newText) {
@@ -38,20 +39,10 @@ abstract class IncrementVersion : DefaultTask() {
     }
 }
 
-tasks.register("incrementPatchVersion", IncrementVersion::class) {
-    getRootProjectFile().set(project.rootDir)
-    getVersionSemantic().set("patch")
-    getCurrentVersion().set(properties["version"].toString())
-}
-
-tasks.register("incrementMinorVersion", IncrementVersion::class) {
-    getRootProjectFile().set(project.rootDir)
-    getVersionSemantic().set("minor")
-    getCurrentVersion().set(properties["version"].toString())
-}
-
-tasks.register("incrementMajorVersion", IncrementVersion::class) {
-    getRootProjectFile().set(project.rootDir)
-    getVersionSemantic().set("major")
-    getCurrentVersion().set(properties["version"].toString())
+listOf("Patch", "Minor", "Major").forEach {
+    tasks.register("increment${it}Version", IncrementVersion::class) {
+        getRootProjectFile().set(project.layout.projectDirectory)
+        getVersionSemantic().set(it)
+        getCurrentVersion().set(properties["version"].toString())
+    }
 }
