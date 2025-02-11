@@ -11,24 +11,25 @@ public class TestSyncPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        var buildServiceProvider = project.getGradle()
-            .getSharedServices()
-            .registerIfAbsent(
-                Constants.BUILD_SERVICE_NAME,
-                TestSynchronizerBuildService.class,
-                spec -> {
-                }
-            );
-        var testSyncExtension = project.getObjects().newInstance(TestSyncExtension.class);
-        project.getExtensions().add(
+        var extensions = project.getExtensions();
+        var objects = project.getObjects();
+        var gradle = project.getGradle();
+        var sharedServices = gradle.getSharedServices();
+        var dependencies = project.getDependencies();
+        var tasks = project.getTasks();
+        var buildServiceProvider = sharedServices.registerIfAbsent(
+            Constants.BUILD_SERVICE_NAME,
+            TestSynchronizerBuildService.class,
+            spec -> {
+            }
+        );
+        var testSyncExtension = objects.newInstance(TestSyncExtension.class);
+        extensions.add(
             TestSyncExtensionView.class,
             Constants.EXTENSION_NAME,
             testSyncExtension
         );
-        var dependencies = project.getDependencies();
-        project.getTasks().withType(
-            Test.class
-        ).configureEach(
+        tasks.withType(Test.class).configureEach(
             test -> {
                 test.usesService(buildServiceProvider);
                 test.doFirst(
