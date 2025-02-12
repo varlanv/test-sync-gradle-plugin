@@ -1,9 +1,13 @@
 package com.varlanv.gradle.plugin;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestUtils {
 
     private static final AtomicReference<Path> projectRoot = new AtomicReference<>();

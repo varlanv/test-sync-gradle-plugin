@@ -8,7 +8,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Predicate;
@@ -70,24 +69,10 @@ public interface BaseTest {
 
     @SneakyThrows
     default void runAndDeleteFile(@NonNull Path file, ThrowingRunnable runnable) {
-        Exception originalException = null;
         try {
             runnable.run();
-        } catch (Exception e) {
-            originalException = e;
         } finally {
-            try {
-                Files.deleteIfExists(file);
-                if (originalException != null) {
-                    throw originalException;
-                }
-            } catch (IOException e) {
-                if (originalException != null) {
-                    throw originalException;
-                } else {
-                    throw e;
-                }
-            }
+            Files.deleteIfExists(file);
         }
     }
 

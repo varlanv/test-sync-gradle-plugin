@@ -3,14 +3,12 @@ package com.varlanv.gradle.plugin;
 import lombok.RequiredArgsConstructor;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.VersionCatalogsExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.plugins.jvm.JvmTestSuite;
-import org.gradle.api.plugins.quality.CheckstyleExtension;
-import org.gradle.api.plugins.quality.Pmd;
-import org.gradle.api.plugins.quality.PmdExtension;
-import org.gradle.api.plugins.quality.PmdPlugin;
+import org.gradle.api.plugins.quality.*;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.VariantVersionMappingStrategy;
 import org.gradle.api.publish.maven.MavenPublication;
@@ -82,7 +80,7 @@ public class InternalConventionPlugin implements Plugin<Project> {
             "java",
             ignore -> {
                 pluginManager.apply(PmdPlugin.class);
-//                pluginManager.apply(CheckstylePlugin.class);
+                pluginManager.apply(CheckstylePlugin.class);
                 if (internalEnvironment.isLocal()) {
                     pluginManager.apply(IdeaPlugin.class);
                     var idea = (IdeaModel) extensions.getByName("idea");
@@ -327,22 +325,22 @@ public class InternalConventionPlugin implements Plugin<Project> {
                                 )
                             )
                         );
-//                        var pmdTestTasks = Stream.of(JavaPlugin.TEST_TASK_NAME, internalConventionExtension.getIntegrationTestName().get())
-//                            .map(testTaskName -> "pmd" + capitalize(testTaskName))
-//                            .map(
-//                                taskName -> tasks.named(
-//                                    taskName,
-//                                    Pmd.class,
-//                                    pmdTask -> pmdTask.setRuleSetFiles(
-//                                        projectLayout.files(
-//                                            staticAnalyseFolder.resolve("pmd-test.xml")
-//                                        )
-//                                    )
-//                                )
-//                            )
-//                            .toList();
+                        var pmdTestTasks = Stream.of(JavaPlugin.TEST_TASK_NAME, internalConventionExtension.getIntegrationTestName().get())
+                            .map(testTaskName -> "pmd" + capitalize(testTaskName))
+                            .map(
+                                taskName -> tasks.named(
+                                    taskName,
+                                    Pmd.class,
+                                    pmdTask -> pmdTask.setRuleSetFiles(
+                                        projectLayout.files(
+                                            staticAnalyseFolder.resolve("pmd-test.xml")
+                                        )
+                                    )
+                                )
+                            )
+                            .toList();
                         staticAnalyseMain.configure(task -> task.dependsOn(pmdMainTask));
-//                        staticAnalyseTest.configure(task -> task.dependsOn(pmdTestTasks));
+                        staticAnalyseTest.configure(task -> task.dependsOn(pmdTestTasks));
                     }
                 );
 
@@ -357,13 +355,13 @@ public class InternalConventionPlugin implements Plugin<Project> {
                         checkstyleExtension.setConfigFile(staticAnalyseFolder.resolve("checkstyle.xml").toFile());
 
                         var checkstyleMainTask = tasks.named("checkstyleMain");
-//                        var checkstyleTestTasks = Stream.of("test", internalConventionExtension.getIntegrationTestName().get())
-//                            .map(string -> "checkstyle" + string.substring(0, 1).toUpperCase() + string.substring(1))
-//                            .map(taskName -> tasks.named(taskName, Task.class))
-//                            .collect(Collectors.toList());
+                        var checkstyleTestTasks = Stream.of("test", internalConventionExtension.getIntegrationTestName().get())
+                            .map(string -> "checkstyle" + string.substring(0, 1).toUpperCase() + string.substring(1))
+                            .map(taskName -> tasks.named(taskName, Task.class))
+                            .collect(Collectors.toList());
 
                         staticAnalyseMain.configure(task -> task.dependsOn(checkstyleMainTask));
-//                        staticAnalyseTest.configure(task -> task.dependsOn(checkstyleTestTasks));
+                        staticAnalyseTest.configure(task -> task.dependsOn(checkstyleTestTasks));
                     }
                 );
                 // -------------------- Configure static analysis end --------------------

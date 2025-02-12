@@ -1,7 +1,11 @@
 package com.varlanv.gradle.plugin;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestGradleVersions {
 
     static List<String> list() {
