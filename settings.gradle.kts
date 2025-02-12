@@ -32,7 +32,9 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 includeBuild("internal-convention-plugin")
 
 include(
+    "common-test",
     "constants",
     "synchronizer",
-    "plugin"
+    "plugin",
+    "functional-test"
 )

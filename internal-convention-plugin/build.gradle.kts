@@ -12,7 +12,7 @@ if (isCiBuild) {
     java {
         toolchain {
             vendor.set(JvmVendorSpec.AZUL)
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 }

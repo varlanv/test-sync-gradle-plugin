@@ -1,9 +1,14 @@
 package com.varlanv.gradle.plugin;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
-@RequiredArgsConstructor
-class InternalEnvironment {
+import java.io.Serializable;
+
+/**
+ * Simple utility for applying different configurations based on different environment.
+ */
+@Value
+class InternalEnvironment implements Serializable {
 
     boolean isCi;
     boolean isTest;
@@ -12,15 +17,7 @@ class InternalEnvironment {
         return "__internal_environment__";
     }
 
-    public boolean isCi() {
-        return isCi;
-    }
-
     public boolean isLocal() {
         return !isCi;
-    }
-
-    public boolean isTest() {
-        return isTest;
     }
 }

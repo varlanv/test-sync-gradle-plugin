@@ -5,6 +5,9 @@ import org.gradle.api.artifacts.VersionCatalog;
 import org.gradle.api.artifacts.VersionConstraint;
 import org.gradle.api.provider.Provider;
 
+/**
+ * Utility for accessing versions from libs.versions.toml file.
+ */
 @RequiredArgsConstructor
 class InternalProperties {
 

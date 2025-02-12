@@ -1,6 +1,5 @@
 pluginManagement {
     repositories {
-        mavenLocal()
         gradlePluginPortal()
     }
 }
@@ -15,12 +14,6 @@ fun pathToRoot(dir: File, parts: MutableList<String> = mutableListOf()): String 
         else -> throw IllegalStateException("Cannot find a directory containing $targetFolderNameMarket")
     }
 }
-
-include(
-    "project1",
-    "project2",
-    "project3"
-)
 
 // only include parent project for manual testing
 if (!providers.provider({ System.getenv("FUNCTIONAL_SPEC_RUN") }).isPresent) {
