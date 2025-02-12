@@ -7,7 +7,7 @@ jetbrains-annotations = "26.0.2"
 checkstyleTool = "10.18.1"
 pmdTool = "7.5.0"
 apacheCommons = "3.17.0"
-apacheCommonsIo = "2.17.0"
+apacheCommonsIo = "2.18.0"
 
 [libraries]
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
