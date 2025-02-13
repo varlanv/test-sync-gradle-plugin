@@ -33,7 +33,7 @@ In `build.gradle(.kts)`:
 
 ```groovy
 plugins {
-    id("com.varlanv.testsync-gradle-plugin").version("0.0.1")
+    id("com.varlanv.testsync").version("0.0.1")
 }
 
 testSync {
@@ -82,7 +82,7 @@ In `build.gradle(.kts)`:
 
 ```groovy
 plugins {
-    id("com.varlanv.testsync-gradle-plugin").version("0.0.1")
+    id("com.varlanv.testsync").version("0.0.1")
 }
 
 testSync {

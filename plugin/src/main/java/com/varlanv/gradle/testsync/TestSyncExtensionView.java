@@ -3,7 +3,7 @@ package com.varlanv.gradle.testsync;
 import org.gradle.api.NonNullApi;
 
 /**
- * Configuration options for gradle plugin {@code com.varlanv.testsync-gradle-plugin}
+ * Configuration options for gradle plugin {@code com.varlanv.testsync}
  */
 @NonNullApi
 public interface TestSyncExtensionView {

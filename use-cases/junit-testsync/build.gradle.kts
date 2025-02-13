@@ -1,7 +1,7 @@
 import com.varlanv.gradle.testsync.TestSyncExtensionView
 
 plugins {
-    id("com.varlanv.testsync-gradle-plugin").apply(false)
+    id("com.varlanv.testsync").apply(false)
 }
 
 abstract class TestBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {
@@ -31,7 +31,7 @@ abstract class TestBuildService : BuildService<BuildServiceParameters.None>, Aut
 
 subprojects {
     project.apply(mapOf("plugin" to "java-library"))
-    project.apply(mapOf("plugin" to "com.varlanv.testsync-gradle-plugin"))
+    project.apply(mapOf("plugin" to "com.varlanv.testsync"))
 
     val buildService = gradle.sharedServices.registerIfAbsent(
         "testFileBuildService",
