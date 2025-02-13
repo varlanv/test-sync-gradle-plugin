@@ -8,7 +8,7 @@ gradlePlugin {
     vcsUrl = "https://github.com/varlanv/test-sync-gradle-plugin"
     plugins {
         create("testSyncPlugin") {
-            id = "com.varlanv.testsync-gradle-plugin"
+            id = "com.varlanv.testsync"
             displayName = "Test Sync Plugin"
             description = "Plugin for synchronizing parallel tests across multiple Gradle modules"
             implementationClass = "com.varlanv.gradle.testsync.TestSyncPlugin"
