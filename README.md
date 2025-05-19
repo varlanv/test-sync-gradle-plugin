@@ -146,7 +146,7 @@ The plugin is built to support all of the major Gradle optimization features, su
 
 - Currently, only JUnit 5 is supported
 - Synchronization is possible only by using Junit tags (`org.junit.jupiter.api.Tag`).
-- The plugin was tested with latest Gradle 8x, 7x, 6x versions (8.12.1, 7.6.1, 6.9.4). Any other version is not
+- The plugin was tested with latest Gradle 8x, 7x, 6x versions (8.14, 7.6.1, 6.9.4). Any other version is not
   guaranteed to work. But most likely any version in range 7.x.x - 8.x.x will work, since plugin does not rely on any
   unstable internal Gradle API.
 

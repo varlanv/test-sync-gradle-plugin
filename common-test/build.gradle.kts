@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     alias(libs.plugins.internalConvention)
+    alias(libs.plugins.testKonvence)
 }
 
 internalConvention {

@@ -2,6 +2,7 @@ package com.varlanv.gradle.testsync;
 
 import com.varlanv.gradle.plugin.BaseTest;
 import com.varlanv.gradle.plugin.UnitTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
     class SyncTagsFromSystemPropertyTest implements UnitTest {
 
         @Test
+        @DisplayName("should return empty array when 'syncSysProperty' is null")
         void should_return_empty_array_when_syncSysProperty_is_null() {
             var subject = new JunitSynchronizingTestListener.SyncTagsFromSystemProperty(
                 syncSysProperty,
@@ -41,6 +43,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"", "  "})
+        @DisplayName("should return empty array when 'syncSysProperty' is empty or blank")
         void should_return_empty_array_when_syncSysProperty_is_empty_or_blank(String syncSysPropertyValue) {
             System.setProperty(syncSysProperty, syncSysPropertyValue);
             var subject = new JunitSynchronizingTestListener.SyncTagsFromSystemProperty(
@@ -53,6 +56,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
         }
 
         @Test
+        @DisplayName("should return empty array when 'syncSysProperty' has no separator")
         void should_return_empty_array_when_syncSysProperty_has_no_separator() {
             System.setProperty(syncSysProperty, "qwe");
             var subject = new JunitSynchronizingTestListener.SyncTagsFromSystemProperty(
@@ -65,6 +69,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
         }
 
         @Test
+        @DisplayName("should return empty array when 'syncSysProperty' has one property separator and right side is empty")
         void should_return_empty_array_when_syncSysProperty_has_one_property_separator_and_right_side_is_empty() {
             System.setProperty(syncSysProperty, "qwe" + syncSysPropertySeparator);
             var subject = new JunitSynchronizingTestListener.SyncTagsFromSystemProperty(
@@ -77,6 +82,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
         }
 
         @Test
+        @DisplayName("should return array with one element when 'syncSysProperty' has one property and lock file exists")
         void should_return_array_with_one_element_when_syncSysProperty_has_one_property_and_lock_file_exists() {
             useTempFile(file -> {
                 var tag = "qwe";
@@ -95,6 +101,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
         }
 
         @Test
+        @DisplayName("should return empty array when 'syncSysProperty' has one property and lock file not exists")
         void should_return_empty_array_when_syncSysProperty_has_one_property_and_lock_file_not_exists() {
             var fileRef = new AtomicReference<Path>();
             useTempFile(fileRef::set);
@@ -112,6 +119,7 @@ public class JunitSynchronizingTestListenerTest implements BaseTest {
         }
 
         @Test
+        @DisplayName("should return empty array when 'syncSysProperty' has two properties and only one lock file exists")
         void should_return_empty_array_when_syncSysProperty_has_two_properties_and_only_one_lock_file_exists() {
             var fileRef = new AtomicReference<Path>();
             useTempFile(fileRef::set);

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.gradlePluginPublish)
     alias(libs.plugins.internalConvention)
+    alias(libs.plugins.testKonvence)
 }
 
 gradlePlugin {
